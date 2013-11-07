@@ -50,7 +50,7 @@ public class LibraryService extends Service<LibraryServiceConfiguration> {
 
 		MessagingService messageService = MessagingService.getInstance();
 		messageService.setConfiguration(configuration);
-		messageService.start();
+		//messageService.start();
 
 		/** Root API */
 		environment.addResource(RootResource.class);

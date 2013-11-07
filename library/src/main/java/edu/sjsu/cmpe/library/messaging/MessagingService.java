@@ -56,6 +56,7 @@ public class MessagingService implements MessagingServiceInterface {
 		port = configuration.getApolloPort();
 	}
 
+	/*
 	public void start() {
 		factory = new StompJmsConnectionFactory();
 		factory.setBrokerURI("tcp://" + host + ":" + port);
@@ -70,10 +71,24 @@ public class MessagingService implements MessagingServiceInterface {
 			e.printStackTrace();
 		}
 	}
+	*/
 
 
 	@Override
 	public void sendMessageToQueue(String message) {
+		
+		factory = new StompJmsConnectionFactory();
+		factory.setBrokerURI("tcp://" + host + ":" + port);
+
+		try {
+			connection = factory.createConnection(user, password);
+
+			connection.start();
+			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Destination dest = new StompJmsDestination(queueName);
 		MessageProducer producer;
