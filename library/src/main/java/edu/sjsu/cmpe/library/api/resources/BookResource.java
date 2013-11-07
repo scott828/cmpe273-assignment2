@@ -102,8 +102,11 @@ public class BookResource {
 		String location = "/books/" + book.getIsbn();
 		bookResponse.addLink(new LinkDto("view-book", location, "GET"));
 
-		MessagingService messageService = MessagingService.getInstance();
-		messageService.sendMessageToQueue(libraryName + ":" + isbn);
+		if (status.toString().equalsIgnoreCase("lost")) {
+			System.out.println("Book " + isbn.get() + " is lost.");
+			MessagingService messageService = MessagingService.getInstance();
+			messageService.sendMessageToQueue(libraryName + ":" + isbn);
+		}
 
 		return Response.status(200).entity(bookResponse).build();
 	}
